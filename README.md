@@ -2,9 +2,9 @@ Here's an expanded and detailed version of the README file, suitable for uploadi
 
 ---
 
-# AWS Data Processing Pipeline Project
+# Event Driven Data Pipeline Project
 
-This project implements a real-time data processing pipeline using various AWS services, including Lambda, S3, DynamoDB, Step Functions, IAM roles, and CloudWatch. This README will guide you through the steps needed to set up, deploy, and manage the pipeline.
+This project implements a real-time user data processing pipeline using various AWS services, including Lambda, S3, DynamoDB, Step Functions, IAM roles, and CloudWatch. This README will guide you through the steps needed to set up, deploy, and manage the pipeline.
 
 ## Table of Contents
 
@@ -12,14 +12,15 @@ This project implements a real-time data processing pipeline using various AWS s
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Setup and Deployment Instructions](#setup-and-deployment-instructions)
-  - [1. Create S3 Buckets](#1-create-s3-buckets)
-  - [2. Create IAM Roles](#2-create-iam-roles)
-  - [3. Deploy Lambda Functions](#3-deploy-lambda-functions)
-  - [4. Create DynamoDB Tables](#4-create-dynamodb-tables)
-  - [5. Create and Configure Step Functions](#5-create-and-configure-step-functions)
-  - [6. Setup CloudWatch Alarms](#6-setup-cloudwatch-alarms)
-  - [7. Trigger the Step Function](#7-trigger-the-step-function)
-  - [8. Testing](#8-testing)
+  - [1. Setting AWS Environment](#1-Setting-AWS-Environment)
+  - [2. Create S3 Buckets](#1-create-s3-buckets)
+  - [3. Create IAM Roles](#2-create-iam-roles)
+  - [4. Deploy Lambda Functions](#3-deploy-lambda-functions)
+  - [5. Create DynamoDB Tables](#4-create-dynamodb-tables)
+  - [6. Deploy Processing_lambda](#3-deploy-processing-lambda)
+  - [7. Create and Configure Step Functions](#5-create-and-configure-step-functions)
+  - [8. Setup CloudWatch Alarms](#6-setup-cloudwatch-alarms)
+  - [9. Trigger the Step Function](#7-trigger-the-step-function)
 - [Conclusion](#conclusion)
 
 ## Introduction
@@ -42,28 +43,39 @@ Here’s a breakdown of the project structure and the purpose of each file:
 - aws_script.py: General setup tasks for AWS resources.
 - create_step_function.py: Script to create and configure AWS Step Functions, defining the workflow of your processing pipeline.
 - Creation_dynamodb_table.py: Script to create and configure DynamoDB tables required for storing processed data.
-- deploy_processing_lambda.py: Script to package, deploy, and configure AWS Lambda functions that process incoming data.
-- lambda.py: Core logic of the Lambda function that processes the data.
-- lambda_function.py: Entry point for the Lambda function.
-- lambda_processing.py: Additional processing logic to handle specific tasks within the Lambda function.
-- payload.json: Sample payload to simulate triggering of the Step Function.
+- deploy_processing_lambda.py: Script to package, deploy, and configure AWS Lambda functions that process s3 data to Dynamodb.
+- deploy_lambda_function.py: Script to package, deploy and configure AWS Lambda function that process raw JSON data to s3.
+- lambda_function.py: Entry point for the Lambda function to store data to s3.
+- lambda_processing.py: Processing Logic to Handle the transfering of data from s3 to Dynamodb.
+- payload.json: Sample payload to simulate triggering of the Step Function and Lambda Processing Function.
 - sample_user_action_data.json: Sample data representing user actions, used for testing the pipeline.
 - trigger_step_function.py: Script to manually trigger the Step Function using the sample payload.
 - trigger_lambda_alarm.py: Script to set up CloudWatch alarms for monitoring Lambda functions and triggering notifications on errors or performance issues.
 
 ## Setup and Deployment Instructions
 
-### 1. Create S3 Buckets
+### 1. Setting AWS Environment
 
-The first step is to create S3 buckets where data and Lambda deployment packages will be stored. Use the AWS CLI to create a new bucket:
+The first step is to create aws environment in the working machine. Setup a user in the IAM and get the user Access key and Security Key 
 
-bash
-aws s3 mb s3://your-bucket-name
+Run The Following Command :
+
+ python3 aws_script.py        
+
+ This will makesure that you have created AWS work ready environment and tells that you can succesfully access s3 bucket.
+
+### 2. Create S3 Buckets
+
+The next step is to create S3 buckets where data and Lambda deployment packages will be stored. Use the AWS CLI to create a new bucket:
+
+Run The Following Command :
+
+python3 Creation_of_s3.py
 
 
 Replace your-bucket-name with a unique name for your bucket. S3 will be used for storing data input/output and Lambda deployment artifacts.
 
-### 2. Create IAM Roles
+### 3. Create IAM Roles
 
 AWS Lambda functions and Step Functions require IAM roles with specific permissions. Create a role with the following policies:
 
@@ -72,11 +84,15 @@ AWS Lambda functions and Step Functions require IAM roles with specific permissi
 - *DynamoDBFullAccess*: Allows Lambda to interact with DynamoDB tables.
 - *StepFunctionsFullAccess*: Allows Lambda and Step Functions to execute workflows.
 
+  Run The Following Command:
+
+  python3 IAM_roles_lambda.py
+
 Attach these policies to the IAM role, and note the ARN of the role, as it will be needed in the deployment scripts.
 
-### 3. Deploy Lambda Functions
+### 4. Deploy Lambda Functions for UserActivityControl
 
-Use the deploy_processing_lambda.py script to package and deploy your Lambda functions. This script will:
+Use the deploy_lambda_function.py script to package and deploy your Lambda functions. This script will:
 
 - Package the Lambda function code and dependencies.
 - Upload the package to S3.
@@ -85,12 +101,15 @@ Use the deploy_processing_lambda.py script to package and deploy your Lambda fun
 Run the following command:
 
 bash
-python deploy_processing_lambda.py
-
+python deploy_lambda_function.py
 
 Ensure that the S3 bucket name and IAM role ARN are correctly specified in the script.
 
-### 4. Create DynamoDB Tables
+After running the command use the below command to invoke the lambda function this will ensure to invoke the lambda function
+
+aws lambda invoke --function-name UserActivityCollector output.txt (you can able to change function name and output will be seen in text format in same folder)
+
+### 5. Create DynamoDB Tables
 
 DynamoDB is used to store the processed data from the Lambda functions. Run the Creation_dynamodb_table.py script to create the necessary tables.
 
@@ -100,7 +119,30 @@ python Creation_dynamodb_table.py
 
 The script will define the schema for your tables, including the primary key and any secondary indexes required for querying.
 
-### 5. Create and Configure Step Functions
+
+### 6. Deploy Lambda Functions for UserActivityProcessingFunction
+
+Use the deploy_processing_lambda.py script to package and deploy your Lambda functions. This script will:
+
+- Package the Lambda function code and dependencies.
+- Upload the data from  S3 to Dynamodb.
+- Deploy the Lambda function and associate it with the created IAM role.
+
+Run the following command:
+
+bash
+python deploy_processing_lambda.py
+
+Ensure that the S3 bucket name and IAM role ARN are correctly specified in the script.
+
+After running the command use the below command to invoke the lambda function this will ensure to invoke the lambda function
+aws lambda invoke \                             
+    --function-name UserActivityProcessingFunction \
+    --payload file://payload.json \
+    output.txt \
+    --cli-binary-format raw-in-base64-out  ( the payload file will be used as triggering file for the lambda and output will be stored in text file)
+
+### 7. Create and Configure Step Functions
 
 Step Functions manage the workflow of your data processing pipeline. Run the create_step_function.py script to create and configure the state machine that orchestrates the Lambda functions.
 
@@ -110,7 +152,16 @@ python create_step_function.py
 
 This script will define the states, transitions, and error handling mechanisms for the pipeline. Ensure the Lambda function ARNs are correctly referenced in the state machine definition.
 
-### 6. Setup CloudWatch Alarms
+Below command used to start the step function and can able to monitor the funciton
+
+aws stepfunctions start-execution \   
+    --state-machine-arn arn:aws:states:us-east-1:211125559197:stateMachine:UserActivityTrackingStateMachine \
+    --input file://payload.json
+
+    aws stepfunctions describe-execution \
+    --execution-arn  “( you can write execution arn number here)”
+
+### 8. Setup CloudWatch Alarms
 
 Monitoring is critical to ensure the smooth operation of your pipeline. The trigger_lambda_alarm.py script sets up CloudWatch alarms for your Lambda functions. These alarms monitor:
 
@@ -119,32 +170,21 @@ Monitoring is critical to ensure the smooth operation of your pipeline. The trig
 - Invocation count anomalies.
 
 Run the script as follows:
+python3 create_lambda_alarms.py
+python3 create_step_function_alarms.py
+python3 create_cloud_dashboard.py
+python3 create_cloud_monitor.py
 
-bash
-python trigger_lambda_alarm.py
+these will create the lambda alarms and stepfunction alarms also it will create the cloud dashboard and monitor 
 
+### 9. Trigger the Step Function and lambda functions
 
-The alarms will trigger notifications or automated actions (such as restarting a failed function) based on the conditions you specify.
+After setting up the infrastructure, you can trigger the Step Function manually or through an automated process. Use the trigger_step_function.py, triggering_lambda_alarms.py  script to trigger the Step Function and lambda function using a sample payload:
 
-### 7. Trigger the Step Function
-
-After setting up the infrastructure, you can trigger the Step Function manually or through an automated process. Use the trigger_step_function.py script to trigger the Step Function using a sample payload:
-
-bash
-python trigger_step_function.py
-
+python3 trigger_step_function.py
+python3 triggering_lambda_alarms.py
 
 You can modify the payload.json file to simulate different scenarios and inputs for testing.
-
-### 8. Testing
-
-To test the pipeline, you can use the provided sample_user_action_data.json file. This file contains mock user actions that can be processed through the pipeline. Use the sample payloads to validate the correctness and efficiency of your setup.
-
-bash
-python trigger_step_function.py
-
-
-Monitor the execution through the AWS Management Console or CloudWatch to ensure everything is working as expected.
 
 ## Conclusion
 
