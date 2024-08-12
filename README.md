@@ -17,7 +17,7 @@ This project implements a real-time user data processing pipeline using various 
   - [3. Create IAM Roles](#2-create-iam-roles)
   - [4. Deploy Lambda Functions](#3-deploy-lambda-functions)
   - [5. Create DynamoDB Tables](#4-create-dynamodb-tables)
-  - [6. Deploy Processing_lambda](#3-deploy-processing-lambda)
+  - [6. Deploy Processing lambda](#3-deploy-processing-lambda)
   - [7. Create and Configure Step Functions](#5-create-and-configure-step-functions)
   - [8. Setup CloudWatch Alarms](#6-setup-cloudwatch-alarms)
   - [9. Trigger the Step Function and lambda function](#7-trigger-the-step-function-and-lambda-function)
