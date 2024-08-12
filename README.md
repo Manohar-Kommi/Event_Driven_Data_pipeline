@@ -20,7 +20,7 @@ This project implements a real-time user data processing pipeline using various 
   - [6. Deploy Processing_lambda](#3-deploy-processing-lambda)
   - [7. Create and Configure Step Functions](#5-create-and-configure-step-functions)
   - [8. Setup CloudWatch Alarms](#6-setup-cloudwatch-alarms)
-  - [9. Trigger the Step Function](#7-trigger-the-step-function)
+  - [9. Trigger the Step Function and lambda function](#7-trigger-the-step-function-and-lambda-function)
 - [Conclusion](#conclusion)
 
 ## Introduction
