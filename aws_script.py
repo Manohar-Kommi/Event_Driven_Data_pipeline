@@ -1,8 +1,8 @@
 import boto3
 
 # Replace these values with your actual AWS credentials
-aws_access_key_id = 'AKIATCKAQL6OU4USEQPJ'
-aws_secret_access_key = 'Uo8bgK2gwdg6tYqazkWGjWsJxNCe1J/4KVULe7dQ'
+aws_access_key_id = 'xxxxxxx'
+aws_secret_access_key = 'xxxxxxxxxxx'
 region_name = 'us-east-1'  # Replace with your preferred region
 
 # Initialize a session using your credentials
