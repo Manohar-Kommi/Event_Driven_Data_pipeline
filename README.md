@@ -1,4 +1,9 @@
-Here's an expanded and detailed version of the README file, suitable for uploading to GitHub:
+# TEAM 6 :  
+# MANOHAR KOMMI
+# JAHNAVI THANDU
+# AKHIL
+# SRINIVAS
+
 
 ---
 
