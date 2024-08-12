@@ -1,8 +1,8 @@
- TEAM 6 :  
-    MANOHAR KOMMI
-    JAHNAVI THANDU
-    AKHIL
-    SRINIVAS
+ ## TEAM 6 :  
+   ### MANOHAR KOMMI
+   ### JAHNAVI THANDU
+   ### AKHIL
+   ### SRINIVAS
 
 
 ---
