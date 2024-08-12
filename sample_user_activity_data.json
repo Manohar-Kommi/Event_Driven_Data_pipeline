@@ -1,0 +1,129 @@
+[
+    {
+      "UserId": "user001",
+      "ActivityId": "activity001",
+      "ActivityType": "login",
+      "Timestamp": "2024-08-05T09:00:00Z",
+      "ActivityData": "User logged in from IP 192.168.1.1"
+    },
+    {
+      "UserId": "user001",
+      "ActivityId": "activity002",
+      "ActivityType": "page_view",
+      "Timestamp": "2024-08-05T09:05:00Z",
+      "ActivityData": "User viewed product page for item ID 12345"
+    },
+    {
+      "UserId": "user001",
+      "ActivityId": "activity003",
+      "ActivityType": "purchase",
+      "Timestamp": "2024-08-05T09:10:00Z",
+      "ActivityData": "User purchased item ID 12345"
+    },
+    {
+      "UserId": "user001",
+      "ActivityId": "activity004",
+      "ActivityType": "logout",
+      "Timestamp": "2024-08-05T09:15:00Z",
+      "ActivityData": "User logged out"
+    },
+    {
+      "UserId": "user002",
+      "ActivityId": "activity005",
+      "ActivityType": "login",
+      "Timestamp": "2024-08-05T09:30:00Z",
+      "ActivityData": "User logged in from IP 192.168.1.2"
+    },
+    {
+      "UserId": "user002",
+      "ActivityId": "activity006",
+      "ActivityType": "page_view",
+      "Timestamp": "2024-08-05T09:35:00Z",
+      "ActivityData": "User viewed homepage"
+    },
+    {
+      "UserId": "user002",
+      "ActivityId": "activity007",
+      "ActivityType": "purchase",
+      "Timestamp": "2024-08-05T09:40:00Z",
+      "ActivityData": "User purchased item ID 67890"
+    },
+    {
+      "UserId": "user002",
+      "ActivityId": "activity008",
+      "ActivityType": "logout",
+      "Timestamp": "2024-08-05T09:45:00Z",
+      "ActivityData": "User logged out"
+    },
+    {
+      "UserId": "user003",
+      "ActivityId": "activity009",
+      "ActivityType": "login",
+      "Timestamp": "2024-08-05T10:00:00Z",
+      "ActivityData": "User logged in from IP 192.168.1.3"
+    },
+    {
+      "UserId": "user003",
+      "ActivityId": "activity010",
+      "ActivityType": "page_view",
+      "Timestamp": "2024-08-05T10:05:00Z",
+      "ActivityData": "User viewed checkout page"
+    },
+    {
+      "UserId": "user003",
+      "ActivityId": "activity011",
+      "ActivityType": "purchase",
+      "Timestamp": "2024-08-05T10:10:00Z",
+      "ActivityData": "User purchased item ID 54321"
+    },
+    {
+      "UserId": "user003",
+      "ActivityId": "activity012",
+      "ActivityType": "logout",
+      "Timestamp": "2024-08-05T10:15:00Z",
+      "ActivityData": "User logged out"
+    },
+    {
+      "UserId": "user004",
+      "ActivityId": "activity013",
+      "ActivityType": "login",
+      "Timestamp": "2024-08-05T10:20:00Z",
+      "ActivityData": "User logged in from IP 192.168.1.4"
+    },
+    {
+      "UserId": "user004",
+      "ActivityId": "activity014",
+      "ActivityType": "page_view",
+      "Timestamp": "2024-08-05T10:25:00Z",
+      "ActivityData": "User viewed product page for item ID 11111"
+    },
+    {
+      "UserId": "user004",
+      "ActivityId": "activity015",
+      "ActivityType": "logout",
+      "Timestamp": "2024-08-05T10:30:00Z",
+      "ActivityData": "User logged out"
+    },
+    {
+      "UserId": "user005",
+      "ActivityId": "activity016",
+      "ActivityType": "login",
+      "Timestamp": "2024-08-05T10:35:00Z",
+      "ActivityData": "User logged in from IP 192.168.1.5"
+    },
+    {
+      "UserId": "user005",
+      "ActivityId": "activity017",
+      "ActivityType": "page_view",
+      "Timestamp": "2024-08-05T10:40:00Z",
+      "ActivityData": "User viewed search results for 'laptops'"
+    },
+    {
+      "UserId": "user005",
+      "ActivityId": "activity018",
+      "ActivityType": "logout",
+      "Timestamp": "2024-08-05T10:45:00Z",
+      "ActivityData": "User logged out"
+    }
+  ]
+  

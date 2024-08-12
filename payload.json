@@ -1,0 +1,14 @@
+{
+    "Records": [
+        {
+            "s3": {
+                "bucket": {
+                    "name": "user-activity-tracking-prod"
+                },
+                "object": {
+                    "key": "user_activity.json"
+                }
+            }
+        }
+    ]
+}
